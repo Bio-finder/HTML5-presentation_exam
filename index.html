@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Maximum parsimony analysis of gene copy number changes</title>
+
+    <meta name="description" content="Quantum chemistry presentation for the Biophysics II course">
+    <meta name="author" content="Yann Spöri">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+    <link rel="stylesheet" href="css/reveal.css">
+    <link rel="stylesheet" href="css/theme/serif.css" id="theme">
+
+    <!-- Code syntax highlighting -->
+    <link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <script>
+      author = "Yann Spöri &amp; Benoît Bergk Pinto";
+    </script>
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="lib/js/html5shiv.js"></script>
+    <![endif]-->
+    <style>
+html body {
+/*  background:url("fsbackground.jpg"); */
+  background-position:center;
+  background-size: 100%;
+}
+html h1,h2,h3,h4,h5,h6,h7,h8,p,.vis {
+  background-color: rgba(255,255,255,0.8);
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section chapter="Maximum parsimony analysis of gene copy number changes" bgimg="url('fsbackground.jpg')">
+          <h3 style="padding:7px">Maximum parsimony analysis<br/>of gene copy number changes</h3>
+          <br/>
+          <h4 style="width: 200px; margin: 0 auto"><script>var today = new Date(); document.write(today.getDate() + "." + (today.getMonth() + 1) + "." + today.getFullYear())</script></h4>
+          <br/><br/>
+          <h3 style="padding: 7px;"><script>document.write(author);</script></h3>
+          <aside class="notes">Use the arrow keys to navigate.</aside>
+        </section>
+        <section chapter="Table of content">
+          <h3>Table of content</h3>
+          <div class="vis" style="padding: 5px; text-align: left">
+          <table>
+            <tr><td>
+          <ol>
+            <li>Introduction</li>
+            <ul>
+              <li>...</li>
+              <li>FISH</li>
+              <li>...</li>
+            </ul>
+          </ol>
+            </td><td>
+          <ol start="2">
+            <li>Methods</li>
+            <ul>
+              <li>RSMT</li>
+              <li>...</li>
+              <li>...</li>
+            </ul>
+          </ol>
+            </td><td>
+          <ol start="3">
+            <li>Results</li>
+            <ul>
+              <li>...</li>
+              <li></li>
+              <li>...</li>
+            </ul>
+          </ol>
+            </td><td style="vertical-align: top">
+          <ol start="4">
+            <li>Discussion</li>
+          </ol>
+            </td></tr>
+          </table>
+          </div>
+        </section>
+        <section chapter="Biological context" bgImg="None">
+<h3>Biological context</h3>
+<div class="vis">
+<small>
+<ul>
+ <li>Generalities about cancer</li>
+ <ul>
+  <li class="fragment">Cancer = evolutionary process (driven by mutations in tumors)</li>
+  <li class="fragment">Several processes: e.g. indels, copy number aberrations, gene fusions,...</li>
+  <li class="fragment">Considerable intra/inter-tumor heterogeneity $\rightarrow$ drug resistance, clinical outcome,…</li>
+ </ul>
+ <li class="fragment">Why phylogenetic trees to study mutations?</li>
+ <ul>
+  <li class="fragment">Good tools to show of multiple subclones in tumors</li>
+  <li class="fragment">Highlight important changes leading to big genome aberrations</li>
+  <li class="fragment">E.g. crucial genes for the evolution of cancers $\rightarrow$ possible targets for innovative treatments</li>
+ </ul>
+ <li class="fragment">Why did the authors decide to study gene copy numbers specifically?</li>
+ <ul>
+  <li class="fragment">Affects large fraction of the genome</li>
+  <li class="fragment">Caused by failures in DNA repair system $\rightarrow$ increase or decrease of gene copy number</li>
+  <li class="fragment" bgImg="url('fishbgground.jpg')">Could be used to infer tumor phylogeny and is easier to scale than other models (e.g. based on single cell sequencing data $\rightarrow$ quite expensive)
+Good tool available to study these genomic modifications $\rightarrow$ FISH !</li>
+ </ul>
+</ul>
+</small>
+</div>
+        </section>
+        <section chapter="Biological background" bgImg="url('fishbgground.jpg')">          
+          <section>
+          </section>
+          <section>
+            <h3>What is FISH?</h3>
+            <div class="vis">Method to copy number changes in tumor cells
+<table border="1">
+<tr>
+  <td></td><td>Gene A</td><td>Gene B</td><td>Gene C</td>
+</tr><tr>
+  <td>Count</td><td>12</td><td>15</td><td>7</td>
+</tr>
+</table>
+            </div>
+          </section>
+          <section>
+            FISH - slide 2
+          </section>
+          <section>
+            FISH - slide ...
+          </section>
+        </section>
+        <section chapter="Rectilinear Steiner Minimum Tree" bgImg="url('stbackground.gif')">
+          <h3 style="background-color: rgba(200,200,200,0.8);">Rectilinear Steiner Minimum Trees (RSMT)</h3>
+          <div class="vis" style="background-color: rgba(200,200,200,0.8); padding: 5px">
+<div style="margin-bottom: 4px">INPUT</div>
+<table>
+<tr style="background-color: rgba(100,100,240,0.4)"><td>Cells</td><td>#Gene A</td><td>#Gene B</td><td>#Gene C</td><td>#Gene D</td></tr>
+<tr style="background-color: rgba(240,220,200,0.8)"><td style="text-align: center">1</td><td style="text-align: center">2</td><td style="text-align: center">2</td><td style="text-align: center">2</td><td style="text-align: center">2</td></tr>
+<tr style="background-color: rgba(220,200,240,0.8)"><td style="text-align: center">2</td><td style="text-align: center">2</td><td style="text-align: center">4</td><td style="text-align: center">1</td><td style="text-align: center">3</td></tr>
+<tr style="background-color: rgba(200,240,220,0.8)"><td style="text-align: center">3</td><td style="text-align: center">2</td><td style="text-align: center">3</td><td style="text-align: center">1</td><td style="text-align: center">1</td></tr>
+</table>
+          </div>
+        </section>
+        <section chapter="Rectilinear Steiner Minimum Tree" bgImg="url('stbackground.gif')">
+          <h3 style="background-color: rgba(200,200,200,0.8);">Rectilinear Steiner Minimum Trees (RSMT)</h3>
+          <div class="vis" style="background-color: rgba(200,200,200,0.8); padding: 5px">
+<div style="margin-bottom: 4px">OUTPUT</div>
+<img src="tree1.png" class="stretch">
+<img src="tree2.png" class="stretch">
+<div>
+</div>
+          </div>
+        </section>
+        <section chapter="Rectilinear Steiner Minimum Tree" bgImg="url('stbackground.gif')">
+          <h3 style="background-color: rgba(200,200,200,0.8);">Rectilinear Steiner Minimum Trees (RSMT)</h3>
+          <div class="vis" style="background-color: rgba(200,200,200,0.8); padding: 5px">
+<div style="margin-bottom: 4px">WEIGHT FUNCTION</div>
+          </div>
+        </section>
+        <section>
+          <h3>Resultats</h3>
+        </section>
+        <section>
+          <h3>Discussion</h3>
+        </section>
+        <section>
+          <h3>Questions</h3>
+        </section>
+      </div>
+    </div>
+
+    <div style="position: absolute; top: 4px; left: 4px"><small id="topic">Maximum parsimony analysis of gene copy number changes</small></div>
+    <img src="LigneULB.png" style="position: absolute; bottom: 3px; right: 0px; width: 100%; height: 5px">
+    <img src="ulbnorm.jpg" style="position: absolute; top: 20px; right: 20px; width: 80px; height: 80px" />
+    <span class="footerLeft" style="position: absolute; bottom: 16px; left: 16px;"><small><script>document.write(author);</script></small></span>
+    <span class="footerCenter" style="position: absolute; bottom: 16px; left: 50%; margin-left: -200px; width: 400px; padding: 3px; text-align: center;">
+      <a href="http://techfnord.de/bioinf/ulb/mpa">http://techfnord.de/bioinf/ulb/mpa</a>
+    </span>
+    <span class="footerRight" style="position: absolute; bottom: 16px; right: 16px; text-align: right"><small style="color: grey">Presentation proudly made without<br/>PowerPoint, Flash, Office Impress, Keynote, Prezi ...<small></span>
+
+    <script src="lib/js/head.min.js"></script>
+    <script src="js/reveal.js"></script>
+    <script>
+      var nodes = document.querySelectorAll('section');
+      var cSection = "";
+      var cBgImg = ""
+      for( var i = 0, len = nodes.length; i < len; i++ ) {
+        var node = nodes[i];
+        if(node.hasAttribute('chapter')) {
+          cSection = node.getAttribute('chapter');
+        } else {
+          node.setAttribute('chapter', cSection);
+        }
+        if(node.hasAttribute('bgImg')) {
+          cBgImg = node.getAttribute('bgImg');
+        } else {
+          node.setAttribute('bgImg', cBgImg);
+        }
+      }
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        slideNumber: true,
+        slideNumber: 'c/t',
+        touch: true,
+        showNotes: true, //false, //false, // true on techfnord
+        transition: 'slide', // none/fade/slide/convex/concave/zoom
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+          { src: 'plugin/zoom-js/zoom.js', async: true },
+          { src: 'plugin/notes/notes.js', async: true },
+          { src: 'plugin/math/math.js', async: true }
+        ]
+      });
+      
+      
+      Reveal.addEventListener( 'slidechanged', function( event ) {
+        slide = event.currentSlide;
+        if(slide.hasAttribute('chapter')) {
+          document.getElementById('topic').innerHTML = slide.getAttribute('chapter');
+          var body = document.getElementsByTagName('body')[0];
+          body.style.backgroundImage = slide.getAttribute('bgimg');
+        }
+        // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+      });
+      Reveal.addEventListener( 'fragmentshown', function( event ) {
+        frag = event.fragment;
+        if(frag.hasAttribute('bgImg')) {
+          var body = document.getElementsByTagName('body')[0];
+          body.style.backgroundImage = frag.getAttribute('bgimg');
+        }
+      } );
+    </script>
+  </body>
+</html>
