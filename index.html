@@ -28,6 +28,9 @@
       document.getElementsByTagName( 'head' )[0].appendChild( link );
     </script>
 
+    <script type="text/javascript" src="dist/vis.js"></script>
+    <link href="dist/vis.css" rel="stylesheet" type="text/css" />
+
     <!--[if lt IE 9]>
       <script src="lib/js/html5shiv.js"></script>
     <![endif]-->
@@ -38,7 +41,13 @@ html body {
   background-size: 100%;
 }
 html h1,h2,h3,h4,h5,h6,h7,h8,p,.vis {
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(200,200,200,0.8);
+/*  background-color: rgba(255,255,255,0.8);*/
+}
+pre {
+background-color: white;
+color: black;
+overflow: hidden
 }
     </style>
   </head>
@@ -58,37 +67,30 @@ html h1,h2,h3,h4,h5,h6,h7,h8,p,.vis {
           <h3>Table of content</h3>
           <div class="vis" style="padding: 5px; text-align: left">
           <table>
-            <tr><td>
+            <tr><td style="vertical-align: top">
           <ol>
             <li>Introduction</li>
             <ul>
-              <li>...</li>
-              <li>FISH</li>
-              <li>...</li>
-            </ul>
-          </ol>
-            </td><td>
-          <ol start="2">
-            <li>Methods</li>
-            <ul>
-              <li>RSMT</li>
-              <li>...</li>
-              <li>...</li>
-            </ul>
-          </ol>
-            </td><td>
-          <ol start="3">
-            <li>Results</li>
-            <ul>
-              <li>...</li>
-              <li></li>
-              <li>...</li>
+              <li><a href="#/2">Biological context</a></li>
+              <li><a href="#/4">RSMT</a></li>
             </ul>
           </ol>
             </td><td style="vertical-align: top">
-          <ol start="4">
-            <li>Discussion</li>
+          <ol start="2">
+            <li>Methods</li>
+            <ul>
+              <li><a href="#/6">mpFISHtree</a></li>
+            </ul>
           </ol>
+            </td><td style="vertical-align: top">
+          <ol start="3">
+            <li>Results</li>
+            <ul>
+              <li><a href="#/7">Results</a></li>
+              <li><a href="#/8">Discussion</a></li>
+            </ul>
+          </ol>
+            </td><td style="vertical-align: top">
             </td></tr>
           </table>
           </div>
@@ -121,7 +123,8 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
 </small>
 </div>
         </section>
-        <section chapter="Biological background" bgImg="url('fishbgground.jpg')">          
+        <section chapter="Biological background" bgImg="url('fishbgground.jpg')">
+<!--
           <section>
           </section>
           <section>
@@ -142,6 +145,7 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
           <section>
             FISH - slide ...
           </section>
+-->
         </section>
         <section chapter="Rectilinear Steiner Minimum Tree" bgImg="url('stbackground.gif')">
           <h3 style="background-color: rgba(200,200,200,0.8);">Rectilinear Steiner Minimum Trees (RSMT)</h3>
@@ -158,27 +162,226 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
         <section chapter="Rectilinear Steiner Minimum Tree" bgImg="url('stbackground.gif')">
           <h3 style="background-color: rgba(200,200,200,0.8);">Rectilinear Steiner Minimum Trees (RSMT)</h3>
           <div class="vis" style="background-color: rgba(200,200,200,0.8); padding: 5px">
-<div style="margin-bottom: 4px">OUTPUT</div>
-<img src="tree1.png" class="stretch">
-<img src="tree2.png" class="stretch">
-<div>
-</div>
+            <div style="margin-bottom: 4px">OUTPUT</div>
+            <img src="Steiner_tree_ex.PNG" class="stretch">
           </div>
         </section>
+<!--
         <section chapter="Rectilinear Steiner Minimum Tree" bgImg="url('stbackground.gif')">
           <h3 style="background-color: rgba(200,200,200,0.8);">Rectilinear Steiner Minimum Trees (RSMT)</h3>
           <div class="vis" style="background-color: rgba(200,200,200,0.8); padding: 5px">
 <div style="margin-bottom: 4px">WEIGHT FUNCTION</div>
           </div>
         </section>
+-->
+<!--
+          <div style="background-color: lightgrey; padding: 5px; overflow: hidden">
+            <table style="width: 100%"><tbody id="nodesTable"></tbody></table>
+            <span style="float: left;">
+              <button onclick="javascript: startSim()">Start</button>
+            </span>
+            <span style="float: right;">
+              <input id="nodetext" type="text" style="width: 100px" />
+              <button onclick="javascript: createNode()">Create</button>
+              <button onclick="javascript: deleteNode()">Delete</button>
+            </span>
+          </div>
+-->
         <section>
-          <h3>Resultats</h3>
+          <h3>Algorithm - mpFISHtree</h3>
+          <div style="background-color: lightgrey; padding: 5px; overflow: hidden">
+            <pre style="font-size: 18px;">
+
+   Input: MPT with optimal weight W opt
+   Output: RSMT with optimal weight W opt
+ For each Leaf in MPT
+   Parent(Leaf ): the parent node of Leaf in MPT
+   MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
+   Compute the ranges of possible values in internal nodes in MPT \ Leaf
+   Assign the cell count pattern of Leaf to Parent(Leaf)
+   Determine all the values for all other internal nodes in MPT
+   Contract all trivial branches in MPT \ Leaf and derive RSMT*
+   If the weight of RSMT* is equal to W<sub>opt</sub>
+     Store RSMT* as a candidate RSMT
+ Return a candidate RSMT with the minimum number of Steiner nodes
+            </pre>
+          </div>
         </section>
         <section>
+          <h3>Algorithm - mpFISHtree</h3>
+          <div style="background-color: lightgrey; padding: 3px; overflow: hidden">
+            <table style="width: 100%">
+              <tr><td style="vertical-align: top; width: 30%">
+                <pre style="font-size: 6px;">
+
+   Input: MPT with optimal weight W opt
+   Output: RSMT with optimal weight W opt
+ For each Leaf in MPT
+<span style="border: 3px solid red">
+   Parent(Leaf ): the parent node of Leaf in MPT
+</span>
+   MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
+   Compute the ranges of possible values in internal nodes in MPT \ Leaf
+   Assign the cell count pattern of Leaf to Parent(Leaf)
+   Determine all the values for all other internal nodes in MPT
+   Contract all trivial branches in MPT \ Leaf and derive RSMT*
+   If the weight of RSMT* is equal to W<sub>opt</sub>
+     Store RSMT* as a candidate RSMT
+ Return a candidate RSMT with the minimum number of Steiner nodes
+                </pre>
+              </td><td style="vertical-align: top; width: 70%">
+                <img src="figA.png" class="stretch" style="width: 100%">
+              </td></tr>
+            </table>
+            <pre>  Parent(Leaf ): the parent node of Leaf in MPT</pre>
+          </div>
+        </section>
+        <section>
+          <h3>Algorithm - mpFISHtree</h3>
+          <div style="background-color: lightgrey; padding: 3px; overflow: hidden">
+            <table style="width: 100%">
+              <tr><td style="vertical-align: top; width: 30%">
+                <pre style="font-size: 6px;">
+
+   Input: MPT with optimal weight W opt
+   Output: RSMT with optimal weight W opt
+ For each Leaf in MPT
+   Parent(Leaf ): the parent node of Leaf in MPT
+<span style="border: 3px solid red">
+   MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
+   Compute the ranges of possible values in internal nodes in MPT \ Leaf
+</span>
+   Assign the cell count pattern of Leaf to Parent(Leaf)
+   Determine all the values for all other internal nodes in MPT
+   Contract all trivial branches in MPT \ Leaf and derive RSMT*
+   If the weight of RSMT* is equal to W<sub>opt</sub>
+     Store RSMT* as a candidate RSMT
+ Return a candidate RSMT with the minimum number of Steiner nodes
+                </pre>
+              </td><td style="vertical-align: top; width: 70%">
+                <img src="figB.png" class="stretch" style="width: 100%">
+              </td></tr>
+            </table>
+            <pre>  MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
+  Compute the ranges of possible values in internal nodes in MPT \ Leaf</pre>
+          </div>
+        </section>
+        <section>
+          <h3>Algorithm - mpFISHtree</h3>
+          <div style="background-color: lightgrey; padding: 3px; overflow: hidden">
+            <table style="width: 100%">
+              <tr><td style="vertical-align: top; width: 30%">
+                <pre style="font-size: 6px;">
+
+   Input: MPT with optimal weight W opt
+   Output: RSMT with optimal weight W opt
+ For each Leaf in MPT
+   Parent(Leaf ): the parent node of Leaf in MPT
+   MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
+   Compute the ranges of possible values in internal nodes in MPT \ Leaf
+<span style="border: 3px solid red">
+   Assign the cell count pattern of Leaf to Parent(Leaf)
+   Determine all the values for all other internal nodes in MPT
+</span>
+   Contract all trivial branches in MPT \ Leaf and derive RSMT*
+   If the weight of RSMT* is equal to W<sub>opt</sub>
+     Store RSMT* as a candidate RSMT
+ Return a candidate RSMT with the minimum number of Steiner nodes
+                </pre>
+              </td><td style="vertical-align: top; width: 70%">
+                <img src="figC.png" class="stretch" style="width: 100%">
+              </td></tr>
+            </table>
+            <pre>  Assign the cell count pattern of Leaf to Parent(Leaf)
+   Determine all the values for all other internal nodes in MPT</pre>
+          </div>
+        </section>
+        <section>
+          <h3>Algorithm - mpFISHtree</h3>
+          <div style="background-color: lightgrey; padding: 3px; overflow: hidden">
+            <table style="width: 100%">
+              <tr><td style="vertical-align: top; width: 30%">
+                <pre style="font-size: 6px;">
+
+   Input: MPT with optimal weight W opt
+   Output: RSMT with optimal weight W opt
+ For each Leaf in MPT
+   Parent(Leaf ): the parent node of Leaf in MPT
+   MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
+   Compute the ranges of possible values in internal nodes in MPT \ Leaf
+   Assign the cell count pattern of Leaf to Parent(Leaf)
+   Determine all the values for all other internal nodes in MPT
+<span style="border: 3px solid red">
+   Contract all trivial branches in MPT \ Leaf and derive RSMT*
+</span>
+   If the weight of RSMT* is equal to W<sub>opt</sub>
+     Store RSMT* as a candidate RSMT
+ Return a candidate RSMT with the minimum number of Steiner nodes
+                </pre>
+              </td><td style="vertical-align: top; width: 70%">
+                <img src="figD.png" class="stretch" style="width: 100%">
+              </td></tr>
+            </table>
+            <pre>  Contract all trivial branches in MPT \ Leaf and derive RSMT*</pre>
+          </div>
+        </section>
+        <section>
+          <h3>Algorithm - mpFISHtree</h3>
+          <div style="background-color: lightgrey; padding: 3px; overflow: hidden">
+            <pre style="font-size: 18px;">
+
+   Input: MPT with optimal weight W opt
+   Output: RSMT with optimal weight W opt
+ For each Leaf in MPT
+   Parent(Leaf ): the parent node of Leaf in MPT
+   MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
+   Compute the ranges of possible values in internal nodes in MPT \ Leaf
+   Assign the cell count pattern of Leaf to Parent(Leaf)
+   Determine all the values for all other internal nodes in MPT
+   Contract all trivial branches in MPT \ Leaf and derive RSMT*
+<span style="border: 3px solid red">
+   If the weight of RSMT* is equal to W<sub>opt</sub>
+     Store RSMT* as a candidate RSMT
+</span>
+ Return a candidate RSMT with the minimum number of Steiner nodes
+            </pre>
+          </div>
+        </section>
+        <section chapter="Results" bgImg="url('resultsbg.jpg')">
+          <h3>Results</h3>
+          <div class="vis">
+            <img src="resultTable.png" class="stretch">
+          </div>
+        </section>
+        <section chapter="Discussion" bgImg="url('discussionbg.jpg')">
           <h3>Discussion</h3>
+          <div class="vis">
+            <ul>
+              <li class="fragment">Best results, obtained with mpFISH algorithm</li>
+              <li class="fragment">Chowdhury et al. extended the Steiner node model to tumor progression.</li>
+              <li class="fragment">MpFISHtree may be extended to model tumor progression (additional testing needed!)</li>
+            </ul>
+          </div>
         </section>
-        <section>
+        <section chapter="Questions" bgImg="url('antibodies.png')">
+<!--
+bgImg="url('questionBg.jpg')">
           <h3>Questions</h3>
+          <div class="vis" style="overflow: hidden">
+            <img src="antibodies.png" class="stretch">
+          </div>
+-->
+        </section>
+        <section chapter="Bibliographie" bgImg="none">
+          <h3>Bibliography</h3>
+          <div class="vis" style="overflow: hidden; padding: 10px">
+            <small>
+              <ul>
+                <li>Phylogenetic analysis of FISH data from tumor cell populations</li>
+                <li>Maximum parsimony tree copy number</li>
+              </ul>
+            </small>
+          </div>
         </section>
       </div>
     </div>
@@ -235,8 +438,8 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
           { src: 'plugin/math/math.js', async: true }
         ]
       });
-      
-      
+
+
       Reveal.addEventListener( 'slidechanged', function( event ) {
         slide = event.currentSlide;
         if(slide.hasAttribute('chapter')) {
@@ -254,5 +457,164 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
         }
       } );
     </script>
+
+<script type="text/javascript">
+// some helper functions
+Array.prototype.remove = function() {
+    var what, a = arguments, L = a.length, ax;
+    while (L && this.length) {
+        what = a[--L];
+        while ((ax = this.indexOf(what)) !== -1) {
+            this.splice(ax, 1);
+        }
+    }
+    return this;
+};
+Array.prototype.contains = function(obj) {
+    var i = this.length;
+    while (i--) {
+        if (this[i] == obj) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// the node array for later
+var nodes = ['2|2|2', '2|1|1', '1|2|1', '4|2|3', '4|1|3']
+
+function deleteNode() {
+  text = document.getElementById('nodetext').value;
+  nodes.remove(text);
+  redrawTable();
+}
+function createNode() {
+  text = document.getElementById('nodetext').value;
+  if(text != "" && !nodes.contains(text)) { // TODO : security checks
+    nodes.push(text);
+    redrawTable();
+  }
+}
+function redrawTable() {
+  old_tbody = document.getElementById('nodesTable');
+  var new_tbody = document.createElement('tbody');
+  new_tbody.id = "nodesTable";
+  header = document.createElement('tr');
+  header.style.backgroundColor = "lightblue";
+  header.innerHTML = "<td>Cell</td><td>#Gene</td>";
+  new_tbody.appendChild(header);
+  for (var i = 0; i < nodes.length; i++) {
+    row = document.createElement('tr');
+    if(i % 2 == 0) {
+      row.style.backgroundColor = "rgba(240,220,200,0.8)";
+    } else {
+      row.style.backgroundColor = "rgba(200,240,220,0.8)";
+    }
+    row.innerHTML = "<td>Cell " + (i + 1) + "</td><td>" + nodes[i] + "</td>";
+    new_tbody.appendChild(row)
+  }
+  old_tbody.parentNode.replaceChild(new_tbody, old_tbody)
+}
+redrawTable(); // draw table once at startup
+
+var nodeSet = new vis.DataSet();
+var edgeSet = new vis.DataSet();
+var network;
+var myNetworkWindow;
+var myCodeWindow;
+var data;
+
+function startSim() {
+  myNetworkWindow = window.open("", "Network", "width=600,height=400,menubar=no,status=no,titilebar=no,resizable=yes");
+  myNetworkWindow.document.write('<div id="myNetwork" style="border: 1px solid grey; margin: 5px; height: 420px; width: 620px"></div>');
+
+  myCodeWindow = window.open("", "Code", "width=600,height=400,menubar=no,status=no,titilebar=no,resizable=yes");
+  myCodeWindow.document.write('<span id="c1">for each leaf in MPT</span><br/><span id="c2">Parent(Leaf): the parent node of Leaf in MPT</span><br/>');
+  myCodeWindow.document.write('<button id="goonButton" onclick="javascript: goon()">Go on &gt;&gt;</button>');
+  myCodeWindow.document.getElementById('goonButton').addEventListener("click", goon);
+
+  for(var i = 0; i < nodes.length; i++) {
+    nodeSet.add({id : nodes[i], label : nodes[i], color : 'lightblue'});
+  }
+
+  lvls = nodes.slice();
+  innerNodeCounter = 0;
+  while(lvls.length > 1) {
+    prevNode = null;
+    nextLvls = []
+    if(lvls.length == 2) {
+      edgeSet.add({from : lvls[0], to: lvls[1]})
+      break;
+    }
+    for(var i = 0; i < lvls.length; i++) {
+      if(prevNode == null && i != lvls.length - 1) {
+        innerNodeCounter += 1;
+        prevNode = innerNodeCounter;
+        nodeSet.add({id : innerNodeCounter, label : '?|?|?', color : 'lightgrey'});
+        nextLvls.push(innerNodeCounter)
+        edgeSet.add({from : lvls[i], to : innerNodeCounter});
+      } else if(prevNode == null) {
+        nextLvls.push(lvls[i])
+      } else {
+        prevNode = null;
+        edgeSet.add({from : lvls[i], to: innerNodeCounter});
+      }
+    }
+    lvls = nextLvls;
+  }
+
+  chNetw();
+}
+function chNetw() {
+  var container = myNetworkWindow.document.getElementById('myNetwork');
+  data = { nodes: nodeSet, edges: edgeSet };
+  var options = {};
+  network = new vis.Network(container, data, options);
+}
+var step = 0
+function goon() {
+  if(step == 0) {
+    data.nodes.remove(nodes[0])
+  }
+}
+</script>
+
+
+<!--
+            <div id="algorithmSvg" style="border: 1px solid grey; margin: 5px; height: 430px; width: 560px"></div>
+            <span style="float: left;">
+              <button onclick="javascript: runStep()">Step</button>
+            </span>
+var indexToInsert=1;
+
+/*
+  // create an array with nodes
+  var nodes = new vis.DataSet([
+    {id: '2|2|2|2', label: '2|2|2|2'},
+    {id: '2|4|1|3', label: '2|4|1|3'},
+    {id: '2|3|1|1', label: '2|3|1|1'}
+  ]);
+
+  // create an array with edges
+  var edges = new vis.DataSet([
+//    {from: 1, to: 3},
+//    {from: 1, to: 2},
+//    {from: 2, to: 4},
+//    {from: 2, to: 5}
+  ]);
+
+  // create a network
+  var container = document.getElementById('algorithmSvg');
+  var data = {
+    nodes: nodes,
+    edges: edges
+  };
+  var options = {
+  };
+  var network = new vis.Network(container, data, options);
+*/
+-->
+
+
   </body>
 </html>
