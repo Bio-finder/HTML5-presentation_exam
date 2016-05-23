@@ -66,29 +66,29 @@ overflow: hidden
         <section chapter="Table of content">
           <h3>Table of content</h3>
           <div class="vis" style="padding: 5px; text-align: left">
-          <table><!-- TODO: readjust links -->
+          <table>
             <tr><td style="vertical-align: top">
           <ol>
             <li>Introduction</li>
             <ul>
               <li><a href="#/2">Biological context</a></li>
-              <li><a href="#/2">Informatical background</a></li>
-              <li><a href="#/4">RSMT</a></li>
+              <li><a href="#/4">Informatical background</a></li>
+              <li><a href="#/6">RSMT</a></li>
             </ul>
           </ol>
             </td><td style="vertical-align: top">
           <ol start="2">
             <li>Methods</li>
             <ul>
-              <li><a href="#/6">mpFISHtree</a></li>
+              <li><a href="#/8">mpFISHtree</a></li>
             </ul>
           </ol>
             </td><td style="vertical-align: top">
           <ol start="3">
             <li>Results</li>
             <ul>
-              <li><a href="#/7">Results</a></li>
-              <li><a href="#/8">Discussion</a></li>
+              <li><a href="#/9">Results</a></li>
+              <li><a href="#/10">Discussion</a></li>
             </ul>
           </ol>
             </td><td style="vertical-align: top">
@@ -149,7 +149,7 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
 -->
         </section>
         <section chapter="Informatical background" bgImg="url('MST.gif')">
-          <h3>Informatical background</h3>
+          <h3>Informatical background - <br/>Steiner Trees</h3>
           <div class="vis">
             <img src="Image163.gif">
           </div>
@@ -202,10 +202,10 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
           <div style="background-color: lightgrey; padding: 5px; overflow: hidden">
             <pre style="font-size: 18px;">
 
-   Input: MPT with optimal weight W opt
-   Output: RSMT with optimal weight W opt
+   Input: MPT with optimal weight W<sub>opt</sub>
+   Output: RSMT with optimal weight W<sub>opt</sub>
  For each Leaf in MPT
-   Parent(Leaf ): the parent node of Leaf in MPT
+   Parent(Leaf): the parent node of Leaf in MPT
    MPT \ Leaf : the tree obtained by removing Leaf, rooted at Parent(Leaf)
    Compute the ranges of possible values in internal nodes in MPT \ Leaf
    Assign the cell count pattern of Leaf to Parent(Leaf)
@@ -243,7 +243,7 @@ Good tool available to study these genomic modifications $\rightarrow$ FISH !</l
                 <img src="figA.png" class="stretch" style="width: 100%">
               </td></tr>
             </table>
-            <pre>  Parent(Leaf ): the parent node of Leaf in MPT</pre>
+            <pre>  Parent(Leaf): the parent node of Leaf in MPT</pre>
           </div>
         </section>
         <section>
